@@ -1,0 +1,48 @@
+#!/bin/bash
+
+#
+# <APP_NAME>.sh
+#
+# Custom installation script for <APP_NAME>.
+#
+
+# --- Safety Settings ---
+set -e
+
+# --- Configuration ---
+APP_NAME="<My Custom Tool>"
+
+# --- Exit Codes ---
+EXIT_CODE_SUCCESS=0
+EXIT_CODE_SKIPPED=99 # Standard exit code for skipped installation.
+EXIT_CODE_DEPS=10    # Standard error code for missing dependencies.
+EXIT_CODE_FATAL=100  # Standard error code for fatal errors.
+
+#
+# log_error(message)
+#
+# This function is used to log a fatal error message to stderr.
+# The parent script will capture this message and display it.
+#
+log_error() {
+    echo "[FATAL: $APP_NAME] $1" >&2
+}
+
+# --- Main Installation Logic ---
+
+# 1. Check if the application is already installed.
+# if command -v my_app_binary &> /dev/null; then
+#     exit $EXIT_CODE_SKIPPED
+# fi
+
+# 2. Check for required dependencies.
+# if ! command -v git &> /dev/null; then
+#     log_error "Missing required dependency: 'git'."
+#     exit $EXIT_CODE_DEPS
+# fi
+
+# 3. Installation steps go here.
+# echo "Installing $APP_NAME..."
+
+# --- Finalization ---
+exit $EXIT_CODE_SUCCESS

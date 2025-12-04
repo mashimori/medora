@@ -1,0 +1,72 @@
+#!/bin/bash
+
+#
+# <SCRIPT_NAME>.sh
+#
+# A brief, concise description of the script's purpose.
+#
+
+# --- Safety Settings ---
+# Exit immediately if a command exits with a non-zero status.
+set -e
+# Return the error status of the last command to exit with a non-zero status in a pipeline.
+set -o pipefail
+
+# --- Logger Import ---
+# If the script uses external functions (e.g., for logging), load them here.
+# The logger is located in the 'shared' directory, so the path should be relative
+# to the main 'install.sh' script.
+source ./shared/logger.sh
+
+# --- Configuration and Metadata ---
+# The APP_NAME is used for logging fatal errors.
+APP_NAME="<APPLICATION_OR_MODULE_NAME>"
+# The LOG_DISPLAY_NAME is used by the script runner to display a user-friendly
+# name for the script.
+LOG_DISPLAY_NAME="<Description_of_the_Action_for_Logs>"
+
+#
+# log_error_and_exit(message)
+#
+# This function is used to log a fatal error message and exit the script.
+#
+log_error_and_exit() {
+    local message="$1"
+    # Print the error message to stderr.
+    echo "[FATAL: $APP_NAME] Error: $message" >&2
+    exit 1
+}
+
+# --- 1. Dependency Check ---
+# Verify that all required tools are available on the system.
+# REQUIRED_COMMAND="<required_tool_name>"
+# if ! command -v "$REQUIRED_COMMAND" &> /dev/null; then
+#     log_error_and_exit "Dependency missing: Required utility '$REQUIRED_COMMAND' is not installed."
+# fi
+
+# --- 2. Path / Variable Setup ---
+# Define and validate key paths, directories, or files.
+# SOURCE_DIR="/path/to/source"
+# if [ ! -d "$SOURCE_DIR" ]; then
+#     log_error_and_exit "Source directory not found: $SOURCE_DIR."
+# fi
+
+# --- 3. Directory Change (if necessary) ---
+# Using 'pushd'/'popd' is safer than just 'cd'.
+# pushd "$SOURCE_DIR" > /dev/null || log_error_and_exit "Failed to change directory to $SOURCE_DIR."
+
+# --- 4. Main Operation Logic ---
+# The core functionality of the script goes here.
+
+# EXAMPLE:
+#
+# echo "Processing..."
+#
+
+# --- 5. Cleanup / Finalization ---
+# Return to the previous directory if 'pushd' was used.
+# popd > /dev/null
+
+# --- Success ---
+# The script will exit with 0 if no errors occurred.
+exit 0
