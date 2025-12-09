@@ -33,7 +33,7 @@ source "$LOG_LIB"
 DNF_SCRIPT="./install/scripts/install_dnf.sh"
 CARGO_SCRIPT="./install/scripts/install_cargo.sh"
 CUSTOM_SCRIPT="./install/scripts/install_custom.sh"
-POST_INSTALL_SCRIPT="./scripts/run_scripts.sh"
+POST_INSTALL_SCRIPT="./post_install/install.sh"
 PICK_DOTFILES_SCRIPT="./shared/pick-dotfiles.sh"
 CHECK_VERSION_SCRIPT="./shared/check-version.sh"
 

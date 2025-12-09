@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# run_scripts.sh
+# install.sh
 #
 # This script coordinates the execution of post-installation scripts.
 # It iterates through all '.sh' files in the 'scripts/run_scripts' directory,
@@ -12,7 +12,7 @@
 source ./shared/logger.sh
 
 # --- Configuration ---
-POST_INSTALL_DIR="./scripts/run_scripts"
+POST_INSTALL_DIR="./post_install/scripts"
 
 # --- Main Logic ---
 log_header_h1 "Post-Installation Script Execution as ($(whoami))"

@@ -1,3 +1,14 @@
+## 🚧 WORK IN PROGRESS 🚧
+
+> [!CAUTION]
+> **This project is still being built and isn't finished yet.**
+>
+> What's here might be incomplete, change without notice, or not quite right. Think of it as a work in progress.
+
+
+---
+
+
 # MEDORA
 
 **MEDORA** (Mega Easy Deployment On Fedora) is my personal project for automated application installation and configuration on Fedora Linux to make life radically easier.
