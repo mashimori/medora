@@ -6,6 +6,12 @@
 wget2-wget
 curl
 unzip
+cmake
+freetype-devel
+fontconfig-devel 
+libxcb-devel
+libxkbcommon-devel 
+g++
 cargo
 python3
 zsh
