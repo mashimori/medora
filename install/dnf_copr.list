@@ -1,6 +1,7 @@
 #
 # List of COPR repositories to be enabled using 'sudo dnf copr enable'.
-# Format: <user>/<repository_name>
+# Format: <user>/<repository_name> <package_to_install>
 #
 
-dejan/lazygit
+dejan/lazygit lazygit
+wezfurlong/wezterm-nightly wezterm

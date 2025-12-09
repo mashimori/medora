@@ -102,29 +102,24 @@ if [ "$COPR_SKIP" = false ]; then
     fi
 
     if [ "$COPR_SKIP" = false ]; then
-        # Loop through the COPR list (only COPR name expected, e.g., 'dejan/lazygit')
-        while IFS= read -r COPR_REPO || [[ -n "$COPR_REPO" ]]; do
+        # Loop through the COPR list (now expecting 'COPR_NAME PACKAGE_NAME(S)')
+        while IFS= read -r LINE || [[ -n "$LINE" ]]; do
 
-            COPR_REPO=$(echo "$COPR_REPO" | xargs)
+            LINE=$(echo "$LINE" | xargs)
 
             # Skip empty lines and comments.
-            if [[ -z "$COPR_REPO" ]]; then
+            if [[ -z "$LINE" ]]; then
                 continue
-            elif [[ "$COPR_REPO" =~ ^# ]]; then
-                log_boot_start "Skipping comment line: $COPR_REPO..."
+            elif [[ "$LINE" =~ ^# ]]; then
+                log_boot_start "Skipping comment line: $LINE..."
                 log_boot_skipped_comment
                 continue
             fi
             
-            # Extract package name by removing everything up to and including the first slash (/).
-            # Example: 'dejan/lazygit' becomes 'lazygit'.
-            PACKAGE_TO_INSTALL=${COPR_REPO#*/}
-            
-            # Check if extraction was successful (i.e., if PACKAGE_TO_INSTALL is not empty)
-            if [ -z "$PACKAGE_TO_INSTALL" ] || [ "$PACKAGE_TO_INSTALL" == "$COPR_REPO" ]; then
-                log_boot_warning "Could not extract package name from '$COPR_REPO'. Skipping package installation."
-                PACKAGE_TO_INSTALL="" # Ensure it's empty to skip install if logic fails
-            fi
+            # Split the line into COPR_REPO (first field) and PACKAGE_TO_INSTALL (rest of line).
+            # Example: "dejan/lazygit lazygit" -> COPR_REPO="dejan/lazygit", PACKAGE_TO_INSTALL="lazygit"
+            COPR_REPO=$(echo "$LINE" | awk '{print $1}')
+            PACKAGE_TO_INSTALL=$(echo "$LINE" | cut -d ' ' -f 2- | xargs) # Cut the first field, take the rest
 
             # --- 1. Enable COPR Repository ---
 
