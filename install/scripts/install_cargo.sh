@@ -11,7 +11,7 @@
 source ./shared/logger.sh
 
 # --- Configuration ---
-PACKAGE_FILE="./install/cargo_packages.list"
+PACKAGE_FILE="./install/cargo.list"
 CARGO_LIST_INSTALLED_CMD="cargo install --list"
 CARGO_INSTALL_CMD="cargo install --quiet"
 

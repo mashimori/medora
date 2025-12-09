@@ -1,0 +1,6 @@
+#
+# List of COPR repositories to be enabled using 'sudo dnf copr enable'.
+# Format: <user>/<repository_name>
+#
+
+dejan/lazygit

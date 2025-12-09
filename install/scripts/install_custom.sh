@@ -47,14 +47,14 @@ for APP_SCRIPT in "$APPS_DIR"/*"$SCRIPT_EXTENSION"; do
 
     # Ensure the script has executable permissions.
     if [[ ! -x "$APP_SCRIPT" ]]; then
-        log_boot_start "Processing app: $LOG_NAME_TO_USE (Permissions check)..."
+        log_boot_start "Processing: $LOG_NAME_TO_USE (Permissions check)..."
         log_boot_failure "Script lacks executable permissions."
         continue
     fi
 
     log_boot_start "Found installation script: $APP_SCRIPT"
     log_boot_ok
-    log_sub_boot_start "Installing application: $LOG_NAME_TO_USE..."
+    log_sub_boot_start "Installing: $LOG_NAME_TO_USE..."
 
     # Execute the script and capture both stdout and stderr.
     OUTPUT=$("$APP_SCRIPT" 2>&1)
@@ -68,7 +68,7 @@ for APP_SCRIPT in "$APPS_DIR"/*"$SCRIPT_EXTENSION"; do
     else
         # Any other exit code is treated as a failure.
         # Try to find a custom FATAL error message in the script's output.
-        CLEAN_ERROR=$(echo "$OUTPUT" | grep 'FATAL:' | head -n 1 | xargs)
+        CLEAN_ERROR=$(echo "$OUTPUT" | grep 'FATAL:' | head -n 1 | sed 's/.*\]//' | xargs)
 
         # Fallback to a generic error message if no FATAL message is found.
         if [ -z "$CLEAN_ERROR" ]; then

@@ -1,11 +1,16 @@
-# 
+#
 # This file contains a list of packages to be installed with 'dnf'.
 # Each package should be on a new line.
-# 
+#
+
 wget2-wget
 curl
+unzip
 cargo
+python3
 zsh
 fzf
+btop
 stow
+neovim
 fastfetch
