@@ -6,5 +6,6 @@ wget2-wget
 curl
 cargo
 zsh
+fzf
 stow
 fastfetch
