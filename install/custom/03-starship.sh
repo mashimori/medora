@@ -30,6 +30,18 @@ log_error() {
     echo "[FATAL: $APP_NAME] $1" >&2
 }
 
+#
+# log_debug(message)
+#
+# This function is used to log an informational/debug message to stdout.
+# It only executes if the variable INSTALL_DEBUG is set to 'true'.
+#
+log_debug() {
+    if [[ "$INSTALL_DEBUG" == "true" ]]; then
+        echo "[DEBUG] $1"
+    fi
+}
+
 # 1. Check if the application is already installed.
 if command -v "$BINARY_NAME" &> /dev/null; then
     exit $EXIT_CODE_SKIPPED
@@ -44,6 +56,7 @@ fi
 
 # 3. Create .local/bin if it doesn't exist.
 if [ ! -d "$HOME/.local/bin" ]; then
+    log_debug "Creating directory $HOME/.local/bin for Starship binary..."
     mkdir -p "$HOME/.local/bin"
 fi
 
@@ -51,16 +64,19 @@ fi
 
 # Execute the official Starship installation script.
 # This pipe requires interaction with the shell (sh).
+log_debug "Downloading and executing Starship installation script..."
 if ! curl -sS "$INSTALL_URL" | sh -s -- -y -b "$HOME/.local/bin"; then
     log_error "Starship installation failed during the execution of the install script."
     exit $EXIT_CODE_FATAL
 fi
 
 # 5. Final installation check.
+log_debug "Verifying Starship installation..."
 if command -v "$BINARY_NAME"; then
     log_error "Starship installed successfully, but the binary was not found in PATH."
     exit $EXIT_CODE_FATAL
 fi
 
 # --- Finalization ---
+log_debug "$APP_NAME installation finished successfully."
 exit $EXIT_CODE_SUCCESS

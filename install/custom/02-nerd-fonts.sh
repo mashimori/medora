@@ -42,6 +42,18 @@ log_error() {
     echo "[FATAL: $APP_NAME] $1" >&2
 }
 
+#
+# log_debug(message)
+#
+# This function is used to log an informational/debug message to stdout.
+# It only executes if the variable INSTALL_DEBUG is set to 'true'.
+#
+log_debug() {
+    if [[ "$INSTALL_DEBUG" == "true" ]]; then
+        echo "[DEBUG] $1"
+    fi
+}
+
 # 1. Check for required dependencies.
 echo "Checking required dependencies (curl, unzip)..."
 if ! command -v curl &> /dev/null; then
@@ -55,6 +67,7 @@ fi
 
 # 2. Create the target directory.
 if [ ! -d "$FONT_DIR" ]; then
+    log_debug "Creating font directory at $FONT_DIR..."
     mkdir -p "$FONT_DIR"
 fi
 
@@ -68,12 +81,14 @@ for font_name in "${FONT_LIST[@]}"; do
     FONT_SUBDIR="${FONT_DIR}/${font_name}NerdFont"
 
     # Downloading the font
+    log_debug "Downloading ${font_name} from ${DOWNLOAD_URL}..."
     if ! curl -fLo "$TEMP_PATH" "$DOWNLOAD_URL"; then
         log_error "Error downloading file: ${DOWNLOAD_URL}."
         continue # Skip to the next font
     fi
     
     # Create subdirectory and extract
+    log_debug "Extracting ${ZIP_FILE} to ${FONT_SUBDIR}..."
     mkdir -p "$FONT_SUBDIR"
     # Use -q (quiet) for unzip
     if ! unzip -o -q "$TEMP_PATH" -d "$FONT_SUBDIR"; then
@@ -83,14 +98,17 @@ for font_name in "${FONT_LIST[@]}"; do
     fi
 
     # Remove the temporary ZIP file
+    log_debug "Removing temporary file ${TEMP_PATH}..."
     rm -f "$TEMP_PATH"
 
 done
 
 # 4. Refresh font cache.
+log_debug "Refreshing font cache..."
 if command -v fc-cache &> /dev/null; then
     fc-cache -fv
 fi
 
 # --- Finalization ---
+log_debug "$APP_NAME installation finished successfully."
 exit $EXIT_CODE_SUCCESS
