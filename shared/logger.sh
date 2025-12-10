@@ -24,8 +24,8 @@ NC=$(tput sgr0)            # Reset color and attributes
 INDENT="  " # Two spaces for indentation of log lines
 
 # --- Layout ---
-LINE_WIDTH=110
-STATUS_WIDTH=110
+LINE_WIDTH=100
+STATUS_WIDTH=100
 SUB_STATUS_WIDTH=$((STATUS_WIDTH - 2))
 
 #
