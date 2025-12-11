@@ -15,9 +15,13 @@ sudo dnf install git -y >/dev/null
 
 # Clone the repository
 echo "Cloning repository..."
-rm -rf ~/.local/share/fedora
-git clone https://github.com/mashimori/fedora.git ~/.local/share/fedora >/dev/null
+rm -rf ~/.local/share/medora
+git clone https://github.com/mashimori/medora.git ~/.local/share/medora >/dev/null
+
+# Navigate to the cloned directory and set execute permissions to all scripts
+cd ~/.local/share/medora || { echo "Failed to navigate to the cloned repository."; exit 1; }
+find . -type f -name "*.sh" -exec chmod +x {} \;
 
 # Run the installation script
 echo "Running install script..."
-bash ~/.local/share/fedora/install.sh
+sudo bash ~/.local/share/medora/install.sh

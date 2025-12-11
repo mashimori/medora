@@ -62,6 +62,11 @@ run_as_user(){
     sudo -u "$REAL_USER" -H "$@"
 }
 
+#--- Export Variables and Functions for Sub-Scripts ---
+export REAL_USER
+export REAL_HOME
+export -f run_as_user
+
 # --- Dotfiles Selection ---
 # Allow the user to select which dotfiles to install.
 run_as_user bash "$PICK_DOTFILES_SCRIPT"
@@ -71,14 +76,14 @@ if [ $EXIT_CODE -ne 0 ]; then
     exit $EXIT_CODE
 fi
 
-# --- Privilege Elevation ---
-# If the script is not run as root, re-run it with 'sudo' to get root privileges.
-# This allows the script to be started by a regular user, and it will
-# automatically elevate privileges when needed.
-if [ "$(id -u)" -ne 0 ]; then
-    log_header_h1 "PRIVILEGE ELEVATION"
-    echo "Please enter your password to elevate privileges for installation."
-    exec sudo bash "$0" "$@"
+# --- Privilege Check ---
+log_header_h1 "PRIVILEGE CHECK"
+log_boot_start "Verifying script is running with root privileges..."
+if [ "$(id -u)" -eq 0 ]; then
+    log_boot_ok
+else
+    log_boot_failure "No root privileges. CURRENT UID: $(id -u). Please run with 'sudo'."
+    exit 1
 fi
 
 log_separator
